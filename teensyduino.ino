@@ -6,6 +6,13 @@ Using the Adafruit CC3000 Wifi Breakout & Shield
 
 Based on an example written by Limor Fried & Kevin Townsend for Adafruit Industries.
 BSD license, all text above must be included in any redistribution
+
+--------Mark's info--------------
+
+There are two main functions in this code, the sendone which sends one peice of sensor data,
+and another function called sendAll, which sends the analog input of all the pins to the website
+
+
 ****************************************************/
 #include <Adafruit_CC3000.h>
 #include <ccspi.h>
@@ -25,7 +32,7 @@ Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ
 
 // EECS WEP network
 #define WLAN_SSID "EECS" // cannot be longer than 32 characters!
-#define WLAN_PASS "removed for repo" //removed for public repo
+#define WLAN_PASS "--" //removed for public repo
 // Security can be WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA or WLAN_SEC_WPA2
 #define WLAN_SECURITY WLAN_SEC_WEP
 
@@ -115,7 +122,7 @@ void loop(void)
    sendAcc(analogRead(A0));
  }*/
     
-    //sendone(analogRead(A9));
+    //sendone(analogRead(A9)); //this only sends the value A9 as 
     
     sendAll(); //Send analog output of all pins
      delay(1000);
@@ -167,12 +174,12 @@ void sendAll() {//send analog data from all the sensors
   //cc3000.disconnect();
 }
 
-void sendone(int sensor) {//Send one sensor
+void sendone(int sensor) {//Send the data from one sensor
   /* Try connecting to the website using HTTP 1.1*/
   www = cc3000.connectTCP(ip, PORT);
   /* Construct message with parameter and send it */
   String page;
-  page= String("")+WEBPAGE+"?sid=swarmbot1&A0="+sensor;
+  page= String("")+WEBPAGE+"?sid=swarmbot1&A0="+sensor; //note that the name of the sensor is whatever our send in the request
   
   if (www.connected()) {
     www.fastrprint(F("GET "));

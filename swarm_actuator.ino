@@ -1,6 +1,4 @@
 /***************************************************
-SwarmLab example:
-read sensors and publish via HTTP GET to a known URL for Ptolemy
 Using the Adafruit CC3000 Wifi Breakout & Shield
 ----> https://www.adafruit.com/products/1469
 
